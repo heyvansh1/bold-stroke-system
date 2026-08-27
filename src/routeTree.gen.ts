@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LiquidityRouteImport } from './routes/liquidity'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as TradeRouteImport } from './routes/trade'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const LiquidityRoute = LiquidityRouteImport.update({
   path: '/liquidity',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TradeRoute = TradeRouteImport.update({
   id: '/trade',
   path: '/trade',
@@ -32,30 +38,34 @@ const TradeRoute = TradeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/liquidity': typeof LiquidityRoute
+  '/portfolio': typeof PortfolioRoute
   '/trade': typeof TradeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/liquidity': typeof LiquidityRoute
+  '/portfolio': typeof PortfolioRoute
   '/trade': typeof TradeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/liquidity': typeof LiquidityRoute
+  '/portfolio': typeof PortfolioRoute
   '/trade': typeof TradeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/liquidity' | '/trade'
+  fullPaths: '/' | '/liquidity' | '/portfolio' | '/trade'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/liquidity' | '/trade'
-  id: '__root__' | '/' | '/liquidity' | '/trade'
+  to: '/' | '/liquidity' | '/portfolio' | '/trade'
+  id: '__root__' | '/' | '/liquidity' | '/portfolio' | '/trade'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LiquidityRoute: typeof LiquidityRoute
+  PortfolioRoute: typeof PortfolioRoute
   TradeRoute: typeof TradeRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LiquidityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trade': {
       id: '/trade'
       path: '/trade'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LiquidityRoute: LiquidityRoute,
+  PortfolioRoute: PortfolioRoute,
   TradeRoute: TradeRoute,
 }
 export const routeTree = rootRouteImport
